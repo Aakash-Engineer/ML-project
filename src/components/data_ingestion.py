@@ -8,6 +8,8 @@ from src.exception import CustomException
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 
+from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
@@ -51,5 +53,8 @@ if __name__ == '__main__':
     train_path, test_path = data_ingestion.initiate_ingestion()
 
     data_transformation = DataTransformation()
-    data_transformation.initiate_transformation(train_path, test_path)
+    train_arr, test_arr, _ = data_transformation.initiate_transformation(train_path, test_path)
+
+    model_trainer = ModelTrainer()
+    model_trainer.initiate_model_training(train_arr, test_arr)
 
