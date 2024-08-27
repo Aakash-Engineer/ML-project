@@ -11,6 +11,7 @@ from sklearn.metrics import (
     r2_score
 )
 from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
 
 def save_object(obj, path):
     try:
@@ -22,7 +23,7 @@ def save_object(obj, path):
         logging.error('Error in save_object method')
         raise CustomException(e, sys)
 
-def evaluate_model(models, x_train, y_train, x_test, y_test):
+def evaluate_model(models, x_train, y_train, x_test, y_test, params):
     try:
         model_names = []
         mse_scores = []
@@ -31,13 +32,20 @@ def evaluate_model(models, x_train, y_train, x_test, y_test):
         cross_scores = []
 
         for name, model in models.items():
-            model.fit(x_train, y_train)
-            y_pred = model.predict(x_test)
+
+            grid_search = GridSearchCV(model, params[name], cv=5, scoring='r2', refit=True)
+            grid_search.fit(x_train, y_train)
+
+            best_model = grid_search.best_estimator_
+
+            y_pred = best_model.predict(x_test)
+
             mse = mean_squared_error(y_test, y_pred)
             mae = mean_absolute_error(y_test, y_pred)
             r2 = r2_score(y_test, y_pred)
             cross_val = cross_val_score(model, x_test, y_test, cv=10, scoring='r2')
-
+            
+            models[name] = best_model
             model_names.append(name)
             mse_scores.append(mse)
             mae_scores.append(mae)
