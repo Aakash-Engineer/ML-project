@@ -48,13 +48,13 @@ class DataIngestion:
             logging.error('Data ingestion failed')
             raise CustomException(e, sys)
 
-if __name__ == '__main__':
-    data_ingestion = DataIngestion()
-    train_path, test_path = data_ingestion.initiate_ingestion()
+# if __name__ == '__main__':
+#     data_ingestion = DataIngestion()
+#     train_path, test_path = data_ingestion.initiate_ingestion()
 
-    data_transformation = DataTransformation()
-    train_arr, test_arr, _ = data_transformation.initiate_transformation(train_path, test_path)
+#     data_transformation = DataTransformation()
+#     train_arr, test_arr, _ = data_transformation.initiate_transformation(train_path, test_path)
 
-    model_trainer = ModelTrainer()
-    report = model_trainer.initiate_model_training(train_arr, test_arr)
+#     model_trainer = ModelTrainer()
+#     report = model_trainer.initiate_model_training(train_arr, test_arr)
 

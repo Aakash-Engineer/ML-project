@@ -65,3 +65,11 @@ def evaluate_model(models, x_train, y_train, x_test, y_test, params):
     except Exception as e:
         logging.info('Error in evaluate model function')
         raise CustomException(e, sys)
+    
+def load_object(path):
+    try:
+        with open(path, 'rb') as f:
+            return dill.load(f)
+    except Exception as e:
+        logging.error('Error in load_object method')
+        raise CustomException(e, sys)

@@ -1,6 +1,7 @@
 numpy
 scipy
 dill
+flask
 pandas
 seaborn
 xgboost
